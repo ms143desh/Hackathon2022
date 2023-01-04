@@ -1,0 +1,8 @@
+pip3 install SpeechRecognition pydub
+
+brew install portaudio
+pip3 install pyaudio
+
+pip install pyttsx3
+pip install gTTS
+pip install playsound
