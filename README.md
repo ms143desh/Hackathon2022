@@ -12,7 +12,7 @@ This repository includes two projects:
 
 # ML Analysis(Python)
 - Project code can be found in this repository - 'pythonMLAnalysis' directory
-- This project structure is divided into two parts:
+- This project structure (functionality) is divided into two parts:
   1. ***ML Model training(based on python code)***
   2. ***APIs to train/retrain ML models and anlysis of text and audio files***
 
@@ -62,8 +62,8 @@ python app.py
 # IntelliJ Plugin(Demo)
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
 - This projects functionality is divided into two sections:
-  - ML Application APIs - Calling APIs of ML Analysis application and showing its response
-  - OpenAI (ChatGPT) - This is a wrapper, calling API for ChatGPT and showing its response
+  - ***ML Application APIs - Calling APIs of ML Analysis application and showing its response***
+  - ***OpenAI (ChatGPT) - This is a wrapper, calling API for ChatGPT and showing its response***
 
 ## Run Commands
 - Install IntelliJ Java & Kotlin IDE - Community Edition - https://www.jetbrains.com/idea/download/#section=mac
