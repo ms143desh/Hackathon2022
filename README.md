@@ -3,11 +3,23 @@ PeerIslands Hackathon 2022 Repository
 
 # About Projects
 This repository includes two projects:
-1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022/edit/main/README.md#ml-analysispython)
-2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022/edit/main/README.md#intellij-plugindemo)
+1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022#ml-analysispython)<br/>
+  a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)<br/>
+  b. [APIs - ML Analysis Application](https://github.com/ms143desh/Hackathon2022#apis---ml-analysis-application)<br/>
+  c. [Instructions](https://github.com/ms143desh/Hackathon2022#instructions)<br/>
+2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022#intellij-plugindemo)<br/>
+  a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands-1)
 
 # ML Analysis(Python)
 - Project code can be found in this repository - 'pythonMLAnalysis' directory
+- This project structure is divided into two parts:
+  1. ***ML Model training(based on python code)***
+  2. ***APIs to train/retrain ML models and anlysis of text and audio files***
+
+- It provides the functionality based on ML trained models to do the sentiment analysis for text and audio files.
+- It also has capability to train and retrain the ML models based on custom dataset, provided dataset schema is as defined
+- Custom trained and retrained ML models can be used for further analysis
+- Al this functionality can be accessed via the exposed APIs
 
 ## Run Commands
 - Install following python packages
@@ -49,14 +61,12 @@ python app.py
 
 # IntelliJ Plugin(Demo)
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
+- This projects functionality is divided into two sections:
+  - ML Application APIs - Calling APIs of ML Analysis application and showing its response
+  - OpenAI (ChatGPT) - This is a wrapper, calling API for ChatGPT and showing its response
 
 ## Run Commands
 - Install IntelliJ Java & Kotlin IDE - Community Edition - https://www.jetbrains.com/idea/download/#section=mac
 - Download project from this repository
 - Import Project as IntelliJ Plugin
 - Run gradle intellij task - 'runIde'
-
-## Functionality
-- This functionality is divided into two categories
-  - Application - Calling APIs of ML Analysis application and showing its response
-  - OpenAI - This is an wrapper, calling API for ChatGPT and showing its response
