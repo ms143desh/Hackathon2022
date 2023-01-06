@@ -1,7 +1,7 @@
 # Hackathon2022
 PeerIslands Hackathon 2022 Repository
 
-# About Projects
+## About Projects
 This repository includes two projects:
 1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022#ml-analysispython)<br/>
   a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)<br/>
@@ -10,7 +10,7 @@ This repository includes two projects:
 2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022#intellij-plugindemo)<br/>
   a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands-1)
 
-# ML Analysis(Python)
+## ML Analysis(Python)
 - Project code can be found in this repository - 'pythonMLAnalysis' directory
 - This project structure (functionality) is divided into two parts:
   1. ***ML Model training(based on python code)***
@@ -21,7 +21,7 @@ This repository includes two projects:
 - Custom trained and retrained ML models can be used for further analysis
 - Al this functionality can be accessed via the exposed APIs
 
-## Run Commands
+### Run Commands
 - Install following python packages
 ```
 python3 -m pip install virtualenv
@@ -42,7 +42,7 @@ source bin/activate
 ```
 python app.py
 ```
-## APIs - ML Analysis Application
+### APIs - ML Analysis Application
 - ```curl --location --request GET 'http://localhost:8000/model/all_retrain_model'```
 
 - ```curl --location --request GET 'http://localhost:8000/model/retrain_model_by_id?id=63b042d9903fbee4d037bb5c'```
@@ -52,20 +52,20 @@ python app.py
 - ```curl --location --request POST 'http://localhost:8000/model/train_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/airline_sentiment.csv"' --form 'data="{\"new_model\":\"default_sentiment_analysis_model\"}"'```
 - ```curl --location --request POST 'http://localhost:8000/model/retrain_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/custom_sentiment.csv"' --form 'data="{\"previous_model\":\"default_sentiment_analysis_model\",\"new_model\":\"retrained_model_01\"}"'```
 
-## Instructions
+### Instructions
 - API will give response using the already trained model.
 - Application runs on port 8000
 - Update the MongoDB connection url in the app_configuration.py file.
 - Train the first default model using API(POST 'http://localhost:8000/model/train_model')
 - Schema files are stored in the project directory
 
-# IntelliJ Plugin(Demo)
+## IntelliJ Plugin(Demo)
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
 - This projects functionality is divided into two sections:
   - ***ML Application APIs - Calling APIs of ML Analysis application and showing its response***
   - ***OpenAI (ChatGPT) - This is a wrapper, calling API for ChatGPT and showing its response***
 
-## Run Commands
+### Run Commands
 - Install IntelliJ Java & Kotlin IDE - Community Edition - https://www.jetbrains.com/idea/download/#section=mac
 - Download project from this repository
 - Import Project as IntelliJ Plugin
