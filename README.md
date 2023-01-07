@@ -4,7 +4,7 @@ PeerIslands Hackathon 2022 Repository
 ## About Projects
 This repository includes two projects:
 1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022#ml-analysispython)<br/>
-  a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)<br/>
+  a. [Deployment & Run commands](https://github.com/ms143desh/Hackathon2022#deployment--run-commands)<br/>
   b. [APIs - ML Analysis Application](https://github.com/ms143desh/Hackathon2022#apis---ml-analysis-application)<br/>
   c. [Instructions](https://github.com/ms143desh/Hackathon2022#instructions)<br/>
 2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022#intellij-plugindemo)<br/>
