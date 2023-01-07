@@ -124,7 +124,7 @@ def ml_train_model_with_dataset(layer_name_suffix, dataset_file_path):
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # print(model.summary())
 
-    model.fit(padded_sequence, sentiment_label[0], validation_split=0.2, epochs=3,
+    model.fit(padded_sequence, sentiment_label[0], validation_split=0.2, epochs=1,
               batch_size=32)
     return model
 
