@@ -43,7 +43,7 @@ sudo python3 -m pip install pydub
 sudo python3 -m pip install SpeechRecognition==1.1.2
 ```
 3. Go to the 'pythonMLAnalysis' directory
-4. Start application - ```python3 app.py```
+4. Start application - ```sudo python3 app.py```
 
 ### APIs - ML Analysis Application
 - ```curl --location --request GET 'http://localhost:80/model/all_retrain_model'```
@@ -58,7 +58,7 @@ sudo python3 -m pip install SpeechRecognition==1.1.2
 
 - ```curl --location --request POST 'http://localhost:80/model/retrain_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/custom_sentiment.csv"' --form 'data="{\"previous_model\":\"default_sentiment_analysis_model\",\"new_model\":\"retrained_model_01\"}"'```
 
-- ***Note*** - On Google Cloud Platform (GCP), ```http://localhost:80/analysis/audio_text_analysis``` gives conflicting error with Google Cloud Speech API. Please make changes in code accordingly for GCP.
+- ***Note*** - On Google Cloud Platform (GCP), ```http://localhost:80/analysis/audio_text_analysis``` gives conflicting error with Google Cloud Speech API. Make changes in code accordingly for GCP.
 
 ### Instructions
 - API will give response using the already trained model.
