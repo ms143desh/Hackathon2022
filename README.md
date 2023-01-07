@@ -8,7 +8,7 @@ This repository includes two projects:
   b. [APIs - ML Analysis Application](https://github.com/ms143desh/Hackathon2022#apis---ml-analysis-application)<br/>
   c. [Instructions](https://github.com/ms143desh/Hackathon2022#instructions)<br/>
 2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022#intellij-plugindemo)<br/>
-  a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands-1)
+  a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)
 
 ## ML Analysis(Python)
 - Project code can be found in this repository - 'pythonMLAnalysis' directory
