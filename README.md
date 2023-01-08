@@ -7,7 +7,7 @@ This repository includes two projects:
   a. [Deployment & Run commands](https://github.com/ms143desh/Hackathon2022#deployment--run-commands)<br/>
   b. [APIs - ML Analysis Application](https://github.com/ms143desh/Hackathon2022#apis---ml-analysis-application)<br/>
   c. [Instructions](https://github.com/ms143desh/Hackathon2022#instructions)<br/>
-2. [IntelliJ Plugin(Demo)](https://github.com/ms143desh/Hackathon2022#intellij-plugindemo)<br/>
+2. [IntelliJ Plugin(Java)](https://github.com/ms143desh/Hackathon2022#intellij-pluginjava)<br/>
   a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)
 
 ## ML Analysis(Python)
@@ -16,7 +16,7 @@ This repository includes two projects:
   1. ***ML Model training(based on python code)***
   2. ***APIs to train/retrain ML models and anlysis of text and audio files***
 
-- It provides the functionality based on ML trained models to do the sentiment analysis for text and audio files.
+- It provides the functionality based on ML trained models to do the sentiment analysis for text, collection specified fields and audio text.
 - It also has capability to train and retrain the ML models based on custom dataset, provided dataset schema is as defined
 - Custom trained and retrained ML models can be used for further analysis
 - Al this functionality can be accessed via the exposed APIs
@@ -52,6 +52,8 @@ sudo python3 -m pip install SpeechRecognition==1.1.2
 
 - ```curl --location --request POST 'http://localhost:80/analysis/sentiment_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","text": "I enjoyed my journey on this flight"}'```
 
+- ```curl --location --request POST 'http://localhost:80/analysis/collection_text_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","input_ns": "sample-data","text_field": "input","output_ns": "sample-data"}'```
+
 - ```curl --location --request POST 'http://localhost:80/analysis/audio_text_analysis' --form 'file=@"/Users/deshaggarwal/PycharmProjects/pythonMLSentimentAnalysis/data/audio-files/text_to_speech_1670860292317137.wav"' --form 'data="{\"model_to_use\":\"default_sentiment_analysis_model\"}"'```
 
 - ```curl --location --request POST 'http://localhost:80/model/train_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/airline_sentiment.csv"' --form 'data="{\"new_model\":\"default_sentiment_analysis_model\"}"'```
@@ -67,7 +69,7 @@ sudo python3 -m pip install SpeechRecognition==1.1.2
 - Train the first default model using API(POST 'http://localhost:80/model/train_model')
 - Schema files are stored in the project directory
 
-## IntelliJ Plugin(Demo)
+## IntelliJ Plugin(Java)
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
 - This projects functionality is divided into two sections:
   - ***ML Application APIs - Calling APIs of ML Analysis application and showing its response***
