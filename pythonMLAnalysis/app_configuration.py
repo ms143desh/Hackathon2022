@@ -1,6 +1,7 @@
 pymongo_connection_string = "mongodb+srv://username:Password@cluster0.jyiajfb.mongodb.net/hackathon-2022"
 hackathon_2022_mongodb_database = "hackathon-2022"
 
+sample_data_collection = "sample-data"
 sentiment_analysis_collection = "sentiment-analysis"
 retrain_model_collection = "retrain-model"
 trained_model_data_collection = "trained-model-data"

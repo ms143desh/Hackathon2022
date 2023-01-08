@@ -3,7 +3,7 @@ import time
 
 import requests
 
-base_url = "http://localhost:8000"
+base_url = "http://localhost:80"
 base_path_integration_test_data = "integration-test-data/"
 
 

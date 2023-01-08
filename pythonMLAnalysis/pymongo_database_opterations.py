@@ -12,16 +12,11 @@ def get_database():
     return client[app_configuration.hackathon_2022_mongodb_database]
 
 
-def insert_sentiment_analysis(item_json):
-    item_json["_id"] = str(ObjectId())
-    get_database()[app_configuration.sentiment_analysis_collection].insert_one(item_json)
-
-
-def insert_retrain_model(item_json):
+def insert_document(item_json, collection_name):
     identity = str(ObjectId())
     item_json["_id"] = identity
     # print(item_json)
-    get_database()[app_configuration.retrain_model_collection].insert_one(item_json)
+    get_database()[collection_name].insert_one(item_json)
     return identity
 
 
@@ -35,13 +30,12 @@ def get_retrain_record_by_model_name(previous_model):
     return document
 
 
-def get_all_retrain_model():
-    return list(get_database()[app_configuration.retrain_model_collection].find({}))
+def get_collection_all_document(collection_name):
+    return list(get_database()[collection_name].find({}))
 
 
-def update_retrain_record(identity):
-    updated_values = {"$set": {"status": "completed", "updated": datetime.datetime.utcnow()}}
-    get_database()[app_configuration.retrain_model_collection].update_one({'_id': identity}, updated_values)
+def update_document(identity, updated_values, collection_name):
+    get_database()[collection_name].update_one({'_id': identity}, updated_values)
 
 
 def save_trained_model_to_db(model_coll_doc):

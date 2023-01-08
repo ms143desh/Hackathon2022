@@ -35,7 +35,7 @@ def get_large_audio_transcription(audio_file_path):
         audio_chunk.export(chunk_filename, format="wav")
         # recognize the chunk
         with sr.WavFile(chunk_filename) as source:
-            audio_listened = r.record(source)
+            audio_listened = r.listen(source)
         # with sr.AudioFile(chunk_filename) as source:
         #     audio_listened = r.record(source)
             # try converting it to text

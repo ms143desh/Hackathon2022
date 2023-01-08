@@ -28,7 +28,7 @@ def train_model():
     filename = secure_filename(file.filename)
     retrain_response["dataset_file_name"] = filename
     app_utility.upload_file(file, filename, app_configuration.upload_folder)
-    identity = pdo.insert_retrain_model(retrain_response)
+    identity = pdo.insert_document(retrain_response, app_configuration.retrain_model_collection)
     retrain_response["id"] = identity
     app_utility.run_train_process(identity)
     return jsonify(retrain_response)
@@ -44,8 +44,28 @@ def sentiment_analysis():
                       "model_to_use": model_to_use,
                       "sentiment": ml_load_trained_model.predict_sentiment(input_json["text"], model_to_use),
                       "created": datetime.datetime.utcnow()}
-    pdo.insert_sentiment_analysis(dict_to_return)
+    pdo.insert_document(dict_to_return, app_configuration.sentiment_analysis_collection)
     return jsonify(dict_to_return)
+
+
+@app.route('/analysis/collection_text_analysis', methods=["POST"])
+def collection_text_analysis():
+    input_json = request.get_json(force=True)
+    model_to_use = input_json["model_to_use"]
+    input_ns = input_json["input_ns"]
+    text_field = input_json["text_field"]
+    output_ns = input_json["output_ns"]
+    sample_data_list = pdo.get_collection_all_document(input_ns)
+    for document in sample_data_list:
+        sentiment = ml_load_trained_model.predict_sentiment(document[text_field], model_to_use)
+        document["sentiment"] = sentiment
+        document["model_to_use"] = model_to_use
+        if input_ns == output_ns:
+            updated_values = {"$set": {"sentiment": sentiment, "model_to_use": model_to_use, "updated": datetime.datetime.utcnow()}}
+            pdo.update_document(document["_id"], updated_values, app_configuration.sample_data_collection)
+        else:
+            pdo.insert_document(document, output_ns)
+    return jsonify(sample_data_list)
 
 
 @app.route('/analysis/audio_text_analysis', methods=["POST"])
@@ -61,7 +81,7 @@ def audio_text_analysis():
                       "model_to_use": model_to_use,
                       "sentiment": ml_load_trained_model.predict_sentiment(whole_audio_text, model_to_use),
                       "created": datetime.datetime.utcnow()}
-    pdo.insert_sentiment_analysis(dict_to_return)
+    pdo.insert_document(dict_to_return, app_configuration.sentiment_analysis_collection)
     return jsonify(dict_to_return)
 
 
@@ -81,7 +101,7 @@ def retrain_model():
     filename = secure_filename(file.filename) + "-" + str(int(time.time() * 1000000))
     retrain_response["dataset_file_name"] = filename
     app_utility.upload_file(file, filename, app_configuration.upload_folder)
-    identity = pdo.insert_retrain_model(retrain_response)
+    identity = pdo.insert_document(retrain_response, app_configuration.retrain_model_collection)
     retrain_response["id"] = identity
     app_utility.run_retrain_process(identity)
     return jsonify(retrain_response)
@@ -89,7 +109,7 @@ def retrain_model():
 
 @app.route('/model/all_retrain_model', methods=["GET"])
 def get_all_retrain_model():
-    return pdo.get_all_retrain_model()
+    return pdo.get_collection_all_document(app_configuration.retrain_model_collection)
 
 
 @app.route('/model/retrain_model_by_id', methods=["GET"])

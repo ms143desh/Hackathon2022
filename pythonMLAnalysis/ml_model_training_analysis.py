@@ -1,3 +1,4 @@
+import datetime
 import pickle
 import time
 
@@ -15,7 +16,8 @@ def train_model(retrain_identity):
     if "new_model" in retrain_request:
         new_model = retrain_request["new_model"]
     create_trained_model(retrain_identity, dataset_file_name, new_model)
-    pdo.update_retrain_record(retrain_identity)
+    updated_values = {"$set": {"status": "completed", "updated": datetime.datetime.utcnow()}}
+    pdo.update_document(retrain_identity, updated_values, app_configuration.retrain_model_collection)
     print("new retrained model details saved successfully in database!")
 
 
@@ -39,7 +41,8 @@ def retrain_trained_model(retrain_identity):
     if "new_model" in retrain_request:
         new_model = retrain_request["new_model"]
     create_retrained_model(retrain_identity, dataset_file_name, previous_model, new_model)
-    pdo.update_retrain_record(retrain_identity)
+    updated_values = {"$set": {"status": "completed", "updated": datetime.datetime.utcnow()}}
+    pdo.update_document(retrain_identity, updated_values, app_configuration.retrain_model_collection)
     print("new retrained model details updated successfully in database!")
 
 
