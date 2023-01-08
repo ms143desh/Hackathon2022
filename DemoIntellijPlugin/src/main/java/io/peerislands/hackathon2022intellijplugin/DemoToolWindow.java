@@ -97,6 +97,20 @@ public class DemoToolWindow {
     private JButton openAIChatGptSendButton1;
     private JTextArea openAIChatGptTextArea2;
     private JTextField openAIChatGptTextField1;
+    private JPanel jTabbedPane1JPanel7;
+    private JButton jPanel7Button1;
+    private JTextArea jPanel7TextArea1;
+    private JPanel jPanel7JPanel1;
+    private JTextField jPanel7TextFieldUrl;
+    private JTextField jPanel7TextField2;
+    private JTextField jPanel7TextField3;
+    private JLabel jPanel7LabelUrl;
+    private JLabel jPanel7Label2;
+    private JLabel jPanel7Label3;
+    private JTextField jPanel7TextField4;
+    private JTextField jPanel7TextField5;
+    private JLabel jPanel7Label4;
+    private JLabel jPanel7Label5;
 
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -156,6 +170,14 @@ public class DemoToolWindow {
         jPanel6Button1.addActionListener(e -> {
             try {
                 sendPostReTrainModel();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        jPanel7Button1.addActionListener(e -> {
+            try {
+                sendPostCollectionTextAnalysis();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -343,6 +365,33 @@ public class DemoToolWindow {
         String prettyJsonString = gson.toJson(jsonElement);
 //        System.out.println(prettyJsonString);
         jPanel6TextArea1.setText(prettyJsonString);
+    }
+
+    private void sendPostCollectionTextAnalysis() throws IOException, InterruptedException {
+        String url = jPanel7TextFieldUrl.getText();
+        String modelToUse = jPanel7TextField2.getText();
+        String outputNS = jPanel7TextField4.getText();
+        String inputNS = jPanel7TextField3.getText();
+        String textField = jPanel7TextField5.getText();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("model_to_use", modelToUse);
+        jsonObject.put("input_ns", inputNS);
+        jsonObject.put("text_field", textField);
+        jsonObject.put("output_ns", outputNS);
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, jsonObject.toJSONString());
+        Request request = new Request.Builder().url(url).method("POST", body)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        Response response = client.newCall(request).execute();
+
+        JsonElement jsonElement = JsonParser.parseString(response.body().string());
+        String prettyJsonString = gson.toJson(jsonElement);
+//        System.out.println(prettyJsonString);
+        jPanel7TextArea1.setText(prettyJsonString);
     }
 
     private void openAIChatGPT() throws IOException, InterruptedException {
