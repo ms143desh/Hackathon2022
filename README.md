@@ -1,6 +1,8 @@
 # Hackathon2022
 PeerIslands Hackathon 2022 Repository
 
+Project Blog - https://medium.com/@ms143desh/integrating-ml-solutions-with-mongodb-30a846a626db
+
 ## About Projects
 This repository includes two projects:
 1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022#ml-analysispython)<br/>
