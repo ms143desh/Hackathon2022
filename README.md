@@ -77,7 +77,7 @@ sudo python3 -m pip install SpeechRecognition==1.1.2
 - Train the first default model using API(POST 'http://localhost:80/model/train_model')
 - Schema files are stored in the project directory
 
-## IntelliJ Plugin(Java)
+## IntelliJ Plugin
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
 - Project code is written using Java & Kotlin programming language
 - This projects functionality is divided into two sections:
