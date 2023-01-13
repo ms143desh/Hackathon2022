@@ -6,7 +6,7 @@ https://mohit-talniya.hashnode.dev/a-case-for-ml-platform-on-mdb-atlas-part-1<br
 https://medium.com/@ms143desh/integrating-ml-solutions-with-mongodb-30a846a626db
 
 ## Linked Repositories
-https://github.com/SuperMohit/ml-models
+https://github.com/SuperMohit/ml-models<br/>
 https://github.com/SuperMohit/mongo-ai-ui
 
 ## About Projects
