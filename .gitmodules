@@ -1,3 +1,6 @@
 [submodule "ml-models"]
 	path = ml-models
 	url = https://github.com/SuperMohit/ml-models
+[submodule "mongo-ai-ui"]
+	path = mongo-ai-ui
+	url = https://github.com/SuperMohit/mongo-ai-ui
