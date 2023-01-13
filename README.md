@@ -1,19 +1,25 @@
 # Hackathon2022
 PeerIslands Hackathon 2022 Repository
 
-Project Blog - https://medium.com/@ms143desh/integrating-ml-solutions-with-mongodb-30a846a626db
+## Project Blogs
+https://mohit-talniya.hashnode.dev/a-case-for-ml-platform-on-mdb-atlas-part-1<br/>
+https://medium.com/@ms143desh/integrating-ml-solutions-with-mongodb-30a846a626db
 
 ## About Projects
 This repository includes two projects:
-1. [ML Analysis(Python)](https://github.com/ms143desh/Hackathon2022#ml-analysispython)<br/>
+1. [ML Analysis](https://github.com/ms143desh/Hackathon2022#ml-analysis)<br/>
   a. [Deployment & Run commands](https://github.com/ms143desh/Hackathon2022#deployment--run-commands)<br/>
   b. [APIs - ML Analysis Application](https://github.com/ms143desh/Hackathon2022#apis---ml-analysis-application)<br/>
   c. [Instructions](https://github.com/ms143desh/Hackathon2022#instructions)<br/>
-2. [IntelliJ Plugin(Java)](https://github.com/ms143desh/Hackathon2022#intellij-pluginjava)<br/>
+2. [IntelliJ Plugin](https://github.com/ms143desh/Hackathon2022#intellij-plugin)<br/>
   a. [Run Commands](https://github.com/ms143desh/Hackathon2022#run-commands)
 
-## ML Analysis(Python)
+## Project Architecture
+<img width="731" alt="image" src="https://user-images.githubusercontent.com/19534198/212213814-7a3f4a97-db11-4db4-a2c5-280de492bf88.png">
+
+## ML Analysis
 - Project code can be found in this repository - 'pythonMLAnalysis' directory
+- Project code is written in Python programming language
 - This project structure (functionality) is divided into two parts:
   1. ***ML Model training(based on python code)***
   2. ***APIs to train/retrain ML models and anlysis of text and audio files***
@@ -73,6 +79,7 @@ sudo python3 -m pip install SpeechRecognition==1.1.2
 
 ## IntelliJ Plugin(Java)
 - Project code can be found in this repository - 'DemoIntellijPlugin' directory
+- Project code is written using Java & Kotlin programming language
 - This projects functionality is divided into two sections:
   - ***ML Application APIs - Calling APIs of ML Analysis application and showing its response***
   - ***OpenAI (ChatGPT) - This is a wrapper, calling API for ChatGPT and showing its response***
