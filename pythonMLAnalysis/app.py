@@ -55,17 +55,13 @@ def collection_text_analysis():
     input_ns = input_json["input_ns"]
     text_field = input_json["text_field"]
     output_ns = input_json["output_ns"]
-    sample_data_list = pdo.get_collection_all_document(input_ns)
-    for document in sample_data_list:
-        sentiment = ml_load_trained_model.predict_sentiment(document[text_field], model_to_use)
-        document["sentiment"] = sentiment
-        document["model_to_use"] = model_to_use
-        if input_ns == output_ns:
-            updated_values = {"$set": {"sentiment": sentiment, "model_to_use": model_to_use, "updated": datetime.datetime.utcnow()}}
-            pdo.update_document(document["_id"], updated_values, app_configuration.sample_data_collection)
-        else:
-            pdo.insert_document(document, output_ns)
-    return jsonify(sample_data_list)
+    batch_processing = False
+    if "batch" in input_json:
+        if input_json["batch"] == "true":
+            batch_processing = True
+
+    ml_load_trained_model.predict_collection_documents(batch_processing, model_to_use, input_ns, text_field, output_ns)
+    return jsonify(input_json)
 
 
 @app.route('/analysis/audio_text_analysis', methods=["POST"])
@@ -121,5 +117,5 @@ def get_retrain_model_by_id():
 
 
 if __name__ == "__main__":
-    # app.run(host="localhost", port=8000, debug=True)
+    # app.run(host='0.0.0.0', port=80, debug=True)
     app.run(host='0.0.0.0', port=80)

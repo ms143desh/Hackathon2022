@@ -1,4 +1,5 @@
 import pickle
+import datetime
 
 import app_configuration
 import tensorflow as tf
@@ -37,6 +38,44 @@ def predict_sentiment(text, model_to_use):
     prediction = int(trained_model.predict(tw).round().item())
     return sentiment_label[1][prediction]
 
+
+def predict_collection_documents(batch_processing, model_to_use, input_ns, text_field, output_ns):
+    if batch_processing is False:
+        documents_list = pdo.get_collection_all_document(input_ns)
+        predict_documents(documents_list, model_to_use, input_ns, text_field, output_ns)
+    else:
+        limit = 20
+        skip = 0
+        collection_count = pdo.get_collection_documents_count(input_ns)
+        while skip < collection_count:
+            batch_documents_list = pdo.get_collection_documents_limit_skip(input_ns, limit, skip)
+            skip += limit
+            if len(batch_documents_list) == 0:
+                break
+            else:
+                print("next skip ", skip)
+                predict_documents(batch_documents_list, model_to_use, input_ns, text_field, output_ns)
+
+        # collection_cursor = pdo.get_collection_cursor(input_ns)
+        # while collection_cursor.alive:
+        #     batch_documents_list = list(collection_cursor)
+        #     if len(batch_documents_list) == 0:
+        #         break
+        #     else:
+        #         predict_documents(batch_documents_list, model_to_use, input_ns, text_field, output_ns)
+
+
+def predict_documents(documents_list, model_to_use, input_ns, text_field, output_ns):
+    for document in documents_list:
+        sentiment = predict_sentiment(document[text_field], model_to_use)
+        document["sentiment"] = sentiment
+        document["model_to_use"] = model_to_use
+        if input_ns == output_ns:
+            updated_values = {
+                "$set": {"sentiment": sentiment, "model_to_use": model_to_use, "updated": datetime.datetime.utcnow()}}
+            pdo.update_document(document["_id"], updated_values, app_configuration.sample_data_collection)
+        else:
+            pdo.insert_document(document, output_ns)
 
 # test_sentence1 = "I enjoyed my journey on this flight."
 # model_to_use_1 = "new_model_01"

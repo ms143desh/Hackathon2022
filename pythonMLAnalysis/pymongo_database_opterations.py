@@ -34,6 +34,18 @@ def get_collection_all_document(collection_name):
     return list(get_database()[collection_name].find({}))
 
 
+def get_collection_documents_count(collection_name):
+    return get_database()[collection_name].count_documents({})
+
+
+def get_collection_documents_limit_skip(collection_name, limit, skip):
+    return list(get_database()[collection_name].find({}).limit(limit).skip(skip))
+
+
+def get_collection_cursor(collection_name):
+    return get_database()[collection_name].find({}, batch_size=100)
+
+
 def update_document(identity, updated_values, collection_name):
     get_database()[collection_name].update_one({'_id': identity}, updated_values)
 
