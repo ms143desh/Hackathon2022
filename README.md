@@ -54,7 +54,7 @@ sudo python3 -m pip install pymongo
 sudo python3 -m pip install pydub
 sudo python3 -m pip install SpeechRecognition==1.1.2
 ```
-3. Packages required for gcloud and aiplatform
+3. Packages required for Google Cloud
 ```
 sudo python3 -m pip install google-cloud-aiplatform
 sudo python3 -m pip install protobuf==4.21.12
@@ -71,13 +71,20 @@ sudo python3 -m pip install google-cloud-speech
 
 - ```curl --location --request POST 'http://localhost:80/analysis/sentiment_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","text": "I enjoyed my journey on this flight"}'```
 
-- ```curl --location --request POST 'http://localhost:80/analysis/collection_text_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","input_ns": "sample-data","text_field": "input","output_ns": "sample-data"}'```
+- ```curl --location --request POST 'http://localhost:80/analysis/collection_text_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","input_ns": "sample-data","text_field": "input","output_ns": "sample-data", "batch": "true"}'```
+  - "batch" field is optional and is used to process all documents of given collection in batch size of 20. Otherwise all documents of collection are analysed in one go.
 
 - ```curl --location --request POST 'http://localhost:80/analysis/audio_text_analysis' --form 'file=@"/Users/deshaggarwal/PycharmProjects/pythonMLSentimentAnalysis/data/audio-files/text_to_speech_1670860292317137.wav"' --form 'data="{\"model_to_use\":\"default_sentiment_analysis_model\"}"'```
 
 - ```curl --location --request POST 'http://localhost:80/model/train_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/airline_sentiment.csv"' --form 'data="{\"new_model\":\"default_sentiment_analysis_model\"}"'```
 
 - ```curl --location --request POST 'http://localhost:80/model/retrain_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/custom_sentiment.csv"' --form 'data="{\"previous_model\":\"default_sentiment_analysis_model\",\"new_model\":\"retrained_model_01\"}"'```
+
+- Following two APIs connects to the Google Cloud for analysis
+
+- ```curl --location --request POST 'http://localhost:80/analysis/gcloud_audio_text_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","gcloud_bucket": "ml-workshop-poc","path_prefix": "audio-files/","output_ns": "gcloud-audio-analysis"}'```
+
+- ```curl --location --request POST 'http://localhost:80/analysis/gcloud_sentiment_analysis' --header 'Content-Type: application/json' --data-raw '{"text": "I enjoyed my journey on this flight"}'```
 
 - ***Note*** - On Google Cloud Platform (GCP), ```http://localhost:80/analysis/audio_text_analysis``` gives conflicting error with Google Cloud Speech API. Make changes in code accordingly for GCP.
 
