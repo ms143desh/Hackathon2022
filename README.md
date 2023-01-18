@@ -54,8 +54,15 @@ sudo python3 -m pip install pymongo
 sudo python3 -m pip install pydub
 sudo python3 -m pip install SpeechRecognition==1.1.2
 ```
-3. Go to the 'pythonMLAnalysis' directory
-4. Start application - ```sudo python3 app.py```
+3. Packages required for gcloud and aiplatform
+```
+sudo python3 -m pip install google-cloud-aiplatform
+sudo python3 -m pip install protobuf==4.21.12
+sudo python3 -m pip install protobuf==3.19.6
+sudo python3 -m pip install google-cloud-speech
+```
+4. Go to the 'pythonMLAnalysis' directory
+5. Start application - ```sudo python3 app.py```
 
 ### APIs - ML Analysis Application
 - ```curl --location --request GET 'http://localhost:80/model/all_retrain_model'```
