@@ -4,6 +4,7 @@ import datetime
 import app_configuration
 import tensorflow as tf
 import ml_model_training_analysis
+import ml_gcloud_speech_to_text
 import pymongo_database_opterations as pdo
 
 sentiment_label, tokenizer, vocab_size, padded_sequence = ml_model_training_analysis \
@@ -75,6 +76,18 @@ def predict_documents(documents_list, model_to_use, input_ns, text_field, output
                 "$set": {"sentiment": sentiment, "model_to_use": model_to_use, "updated": datetime.datetime.utcnow()}}
             pdo.update_document(document["_id"], updated_values, app_configuration.sample_data_collection)
         else:
+            pdo.insert_document(document, output_ns)
+
+
+def predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix):
+    bucket_blobs_list = ml_gcloud_speech_to_text.get_gcloud_bucket_folder_objects(gcloud_bucket, path_prefix)
+    for blob in bucket_blobs_list:
+        if not blob.name.endswith("/"):
+            gcloud_audio_file_path = "gs://" + blob.bucket.name + "/" + blob.name
+            # print(gcloud_audio_file_path)
+            whole_audio_text = ml_gcloud_speech_to_text.get_gcloud_speech_transcription(gcloud_audio_file_path)
+            sentiment = predict_sentiment(whole_audio_text, model_to_use)
+            document = {"sentiment": sentiment, "model_to_use": model_to_use, "input": whole_audio_text, "updated": datetime.datetime.utcnow()}
             pdo.insert_document(document, output_ns)
 
 # test_sentence1 = "I enjoyed my journey on this flight."
