@@ -1,11 +1,16 @@
+import json
 import pickle
 import datetime
+
+from google.protobuf import json_format
+from google.protobuf.struct_pb2 import Value
 
 import app_configuration
 import tensorflow as tf
 import ml_model_training_analysis
 import ml_gcloud_speech_to_text
 import pymongo_database_opterations as pdo
+from google.cloud import aiplatform
 
 sentiment_label, tokenizer, vocab_size, padded_sequence = ml_model_training_analysis \
             .ml_read_dataset_for_modelling(app_configuration.training_dataset_file_path)
@@ -13,6 +18,15 @@ sentiment_label, tokenizer, vocab_size, padded_sequence = ml_model_training_anal
 
 dict_of_trained_models = {}
 dict_of_read_dataset_variables = {}
+
+
+gcloud_prediction_client_options = {"api_endpoint": app_configuration.gcloud_api_endpoint}
+gcloud_prediction_client = aiplatform.gapic.PredictionServiceClient(client_options=gcloud_prediction_client_options)
+# parameters_dict = {}
+# parameters = json_format.ParseDict(parameters_dict, Value())
+gcloud_prediction_endpoint = gcloud_prediction_client\
+        .endpoint_path(project=app_configuration.gcloud_project, location=app_configuration.gcloud_location,
+                       endpoint=app_configuration.gcloud_model_deployment_endpoint)
 
 
 def predict_sentiment(text, model_to_use):
@@ -24,18 +38,9 @@ def predict_sentiment(text, model_to_use):
     else:
         trained_model = dict_of_trained_models.get(model_to_use)
 
-    # if dict_of_read_dataset_variables.get("sentiment_label", "empty") == "empty":
-    #     sentiment_label, tokenizer, vocab_size, padded_sequence = ml_model_training_analysis \
-    #         .ml_read_dataset_for_modelling(app_configuration.training_dataset_file_path)
-    #     dict_of_read_dataset_variables["sentiment_label"] = sentiment_label
-    #     dict_of_read_dataset_variables["tokenizer"] = tokenizer
-    # else:
-    #     sentiment_label = dict_of_read_dataset_variables["sentiment_label"]
-    #     tokenizer = dict_of_read_dataset_variables["tokenizer"]
-
-    # print(trained_model_dict)
     tw = tokenizer.texts_to_sequences([text])
     tw = tf.keras.preprocessing.sequence.pad_sequences(tw, maxlen=app_configuration.text_max_length)
+    # print(tw)
     prediction = int(trained_model.predict(tw).round().item())
     return sentiment_label[1][prediction]
 
@@ -90,9 +95,19 @@ def predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix):
             document = {"sentiment": sentiment, "model_to_use": model_to_use, "input": whole_audio_text, "updated": datetime.datetime.utcnow()}
             pdo.insert_document(document, output_ns)
 
-# test_sentence1 = "I enjoyed my journey on this flight."
-# model_to_use_1 = "new_model_01"
-# print(predict_sentiment(test_sentence1, model_to_use_1))
-#
-# test_sentence2 = "This is the worst flight experience of my life!"
-# print(predict_sentiment(test_sentence2))
+
+def predict_using_gcloud_model_endpoint(text):
+    tw = tokenizer.texts_to_sequences([text])
+    tw = tf.keras.preprocessing.sequence.pad_sequences(tw, maxlen=app_configuration.text_max_length)
+    instances = [json_format.ParseDict(tw.tolist()[0], Value())]
+    print(instances)
+    parameters_dict = {}
+    parameters = json_format.ParseDict(parameters_dict, Value())
+    response = gcloud_prediction_client.predict(
+        endpoint=gcloud_prediction_endpoint, instances=instances, parameters=parameters)
+    prediction = round(response.predictions[0][0], 2)
+    if prediction <= 0.5:
+        prediction = 0
+    else:
+        prediction = 1
+    return sentiment_label[1][prediction]

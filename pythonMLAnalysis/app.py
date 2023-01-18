@@ -41,9 +41,10 @@ def sentiment_analysis():
     model_to_use = input_json["model_to_use"]
     # if "model_to_use" in input_json:
     #     model_to_use = input_json["model_to_use"]
+    sentiment = ml_load_trained_model.predict_sentiment(input_json["text"], model_to_use)
     dict_to_return = {"input": input_json["text"],
                       "model_to_use": model_to_use,
-                      "sentiment": ml_load_trained_model.predict_sentiment(input_json["text"], model_to_use),
+                      "sentiment": sentiment,
                       "created": datetime.datetime.utcnow()}
     pdo.insert_document(dict_to_return, app_configuration.sentiment_analysis_collection)
     return jsonify(dict_to_return)
@@ -82,18 +83,6 @@ def audio_text_analysis():
     return jsonify(dict_to_return)
 
 
-@app.route('/analysis/gcloud_audio_text_analysis', methods=["POST"])
-def gcloud_audio_text_analysis():
-    input_json = request.get_json(force=True)
-    model_to_use = input_json["model_to_use"]
-    gcloud_bucket = input_json["gcloud_bucket"]
-    path_prefix = input_json["path_prefix"]
-    output_ns = input_json["output_ns"]
-
-    ml_load_trained_model.predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix)
-    return jsonify(input_json)
-
-
 @app.route('/model/retrain_model', methods=["POST"])
 def retrain_model():
     input_json = json.loads(request.form.get('data'))
@@ -127,6 +116,29 @@ def get_retrain_model_by_id():
     print(args)
     identity = args.get('id')
     return pdo.get_retrain_record_by_identity(identity)
+
+
+@app.route('/analysis/gcloud_sentiment_analysis', methods=["POST"])
+def gcloud_sentiment_analysis():
+    input_json = request.get_json(force=True)
+    sentiment = ml_load_trained_model.predict_using_gcloud_model_endpoint(input_json["text"])
+    dict_to_return = {"input": input_json["text"],
+                      "sentiment": sentiment,
+                      "created": datetime.datetime.utcnow()}
+    pdo.insert_document(dict_to_return, app_configuration.sentiment_analysis_collection)
+    return jsonify(dict_to_return)
+
+
+@app.route('/analysis/gcloud_audio_text_analysis', methods=["POST"])
+def gcloud_audio_text_analysis():
+    input_json = request.get_json(force=True)
+    model_to_use = input_json["model_to_use"]
+    gcloud_bucket = input_json["gcloud_bucket"]
+    path_prefix = input_json["path_prefix"]
+    output_ns = input_json["output_ns"]
+
+    ml_load_trained_model.predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix)
+    return jsonify(input_json)
 
 
 if __name__ == "__main__":
