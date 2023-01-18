@@ -62,7 +62,8 @@ sudo python3 -m pip install protobuf==3.19.6
 sudo python3 -m pip install google-cloud-speech
 ```
 4. Go to the 'pythonMLAnalysis' directory
-5. Start application - ```sudo python3 app.py```
+5. Update "google_secret_key.json" file in "gcloud-key" folder with your Google Cloud APIs keys
+6. Start application - ```sudo python3 app.py```
 
 ### APIs - ML Analysis Application
 - ```curl --location --request GET 'http://localhost:80/model/all_retrain_model'```
@@ -80,7 +81,7 @@ sudo python3 -m pip install google-cloud-speech
 
 - ```curl --location --request POST 'http://localhost:80/model/retrain_model' --form 'file=@"/Users/deshaggarwal/work/Hackathon/2022/custom_sentiment.csv"' --form 'data="{\"previous_model\":\"default_sentiment_analysis_model\",\"new_model\":\"retrained_model_01\"}"'```
 
-- Following two APIs connects to the Google Cloud for analysis
+- Following two APIs connects to the Google Cloud for analysis. Before using these APIs update "google_secret_key.json" file in "gcloud-key" folder with your Google Cloud APIs keys and gcloud variables in configuration file.
 
 - ```curl --location --request POST 'http://localhost:80/analysis/gcloud_audio_text_analysis' --header 'Content-Type: application/json' --data-raw '{"model_to_use": "default_sentiment_analysis_model","gcloud_bucket": "ml-workshop-poc","path_prefix": "audio-files/","output_ns": "gcloud-audio-analysis"}'```
 
