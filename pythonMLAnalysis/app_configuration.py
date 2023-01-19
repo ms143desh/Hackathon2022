@@ -18,7 +18,7 @@ text_max_length = 150
 audio_folder = "data/audio-files/"
 audio_chunk_folder_name = "data/audio-files/audio-chunks/"
 
-gcloud_project = "bq-sln"
+gcloud_project = <PROJECT_ID>
 gcloud_location = "us-central1"
-gcloud_model_deployment_endpoint = "7621731040859521024"
+gcloud_model_deployment_endpoint = <DEPLOYED_ENDPOINT_ID>
 gcloud_api_endpoint = "us-central1-aiplatform.googleapis.com"
