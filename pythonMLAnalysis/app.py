@@ -132,12 +132,11 @@ def gcloud_sentiment_analysis():
 @app.route('/analysis/gcloud_audio_text_analysis', methods=["POST"])
 def gcloud_audio_text_analysis():
     input_json = request.get_json(force=True)
-    model_to_use = input_json["model_to_use"]
     gcloud_bucket = input_json["gcloud_bucket"]
     path_prefix = input_json["path_prefix"]
     output_ns = input_json["output_ns"]
 
-    ml_load_trained_model.predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix)
+    ml_load_trained_model.predict_gcloud_audios(output_ns, gcloud_bucket, path_prefix)
     return jsonify(input_json)
 
 

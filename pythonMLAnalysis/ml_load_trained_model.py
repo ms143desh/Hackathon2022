@@ -84,7 +84,7 @@ def predict_documents(documents_list, model_to_use, input_ns, text_field, output
             pdo.insert_document(document, output_ns)
 
 
-def predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix):
+def predict_gcloud_audios(output_ns, gcloud_bucket, path_prefix):
     bucket_blobs_list = ml_gcloud_speech_to_text.get_gcloud_bucket_folder_objects(gcloud_bucket, path_prefix)
     for blob in bucket_blobs_list:
         if not blob.name.endswith("/"):
@@ -92,15 +92,15 @@ def predict_gcloud_audios(model_to_use, output_ns, gcloud_bucket, path_prefix):
             # print(gcloud_audio_file_path)
             whole_audio_text = ml_gcloud_speech_to_text.get_gcloud_speech_transcription(gcloud_audio_file_path)
             sentiment = predict_using_gcloud_model_endpoint(whole_audio_text)
-            document = {"sentiment": sentiment, "model_to_use": model_to_use, "input": whole_audio_text, "updated": datetime.datetime.utcnow()}
+            document = {"sentiment": sentiment, "input": whole_audio_text, "updated": datetime.datetime.utcnow()}
             pdo.insert_document(document, output_ns)
 
 
 def predict_using_gcloud_model_endpoint(text):
     tw = tokenizer.texts_to_sequences([text])
     tw = tf.keras.preprocessing.sequence.pad_sequences(tw, maxlen=app_configuration.text_max_length)
+    # print(tw.tolist())
     instances = [json_format.ParseDict(tw.tolist()[0], Value())]
-    # print(instances)
     parameters_dict = {}
     parameters = json_format.ParseDict(parameters_dict, Value())
     response = gcloud_prediction_client.predict(
