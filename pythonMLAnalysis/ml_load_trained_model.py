@@ -1,4 +1,3 @@
-import json
 import pickle
 import datetime
 
@@ -22,8 +21,6 @@ dict_of_read_dataset_variables = {}
 
 gcloud_prediction_client_options = {"api_endpoint": app_configuration.gcloud_api_endpoint}
 gcloud_prediction_client = aiplatform.gapic.PredictionServiceClient(client_options=gcloud_prediction_client_options)
-# parameters_dict = {}
-# parameters = json_format.ParseDict(parameters_dict, Value())
 gcloud_prediction_endpoint = gcloud_prediction_client\
         .endpoint_path(project=app_configuration.gcloud_project, location=app_configuration.gcloud_location,
                        endpoint=app_configuration.gcloud_model_deployment_endpoint)

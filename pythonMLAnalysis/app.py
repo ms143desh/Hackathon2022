@@ -15,6 +15,14 @@ import ml_big_audio_to_text
 app = Flask(__name__)
 
 
+@app.route('/model/insert_document', methods=['POST'])
+def insert_document():
+    input_json = request.get_json(force=True)
+    identity = pdo.insert_document(input_json, app_configuration.sample_data_collection)
+    input_json["_id"] = identity
+    return jsonify(input_json)
+
+
 @app.route('/model/train_model', methods=['POST'])
 def train_model():
     input_json = json.loads(request.form.get('data'))

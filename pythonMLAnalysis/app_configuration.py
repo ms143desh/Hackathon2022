@@ -7,7 +7,7 @@ retrain_model_collection = "retrain-model"
 trained_model_data_collection = "trained-model-data"
 
 upload_folder = "data/training-dataset"
-# default_model = "default_sentiment_analysis_model"
+default_model = "default_sentiment_analysis_model"
 
 trained_model_base_path = 'data/trained-model/'
 trained_model_file_path = trained_model_base_path + 'sentiment_analysis_trained_model'
@@ -18,7 +18,7 @@ text_max_length = 150
 audio_folder = "data/audio-files/"
 audio_chunk_folder_name = "data/audio-files/audio-chunks/"
 
-gcloud_project = <PROJECT_ID>
+gcloud_project = "bq-sln"
 gcloud_location = "us-central1"
-gcloud_model_deployment_endpoint = <DEPLOYED_ENDPOINT_ID>
+gcloud_model_deployment_endpoint = "7621731040859521024"
 gcloud_api_endpoint = "us-central1-aiplatform.googleapis.com"
